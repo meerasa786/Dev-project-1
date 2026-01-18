@@ -22,20 +22,22 @@ pipeline {
     }
 
     stage('Deploy') {
-      steps {
+    steps {
         withCredentials([
-          usernamePassword(
-            credentialsId: "${DOCKER_REGISTRY_CREDS}",
-            usernameVariable: 'DOCKER_USERNAME',
-            passwordVariable: 'DOCKER_PASSWORD'
-          )
+            usernamePassword(
+                credentialsId: 'dockerhub-creds',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_PASS'
+            )
         ]) {
-          sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-          sh 'docker push $DOCKER_BFLASK_IMAGE'
+            sh '''
+                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                docker push meera786/my-flask-app:latest
+            '''
         }
-      }
     }
-  }
+}
+
 
   post {
     always {
