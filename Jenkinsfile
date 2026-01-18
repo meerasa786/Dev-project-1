@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    DOCKER_BFLASK_IMAGE = "yourdockerhubusername/my-flask-app:latest"
+    DOCKER_BFLASK_IMAGE = "meera786/my-flask-app:latest"
     DOCKER_REGISTRY_CREDS = "dockerhub"
   }
 
